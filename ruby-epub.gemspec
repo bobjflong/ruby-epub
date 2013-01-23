@@ -9,4 +9,5 @@ Gem::Specification.new do |spec|
   spec.files = ['README', 'lib/ruby-epub.rb']
   spec.add_dependency('rubyzip')
   spec.add_dependency('nokogiri')
+  spec.add_dependency('terminal-table')
 end  

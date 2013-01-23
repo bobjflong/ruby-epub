@@ -26,13 +26,17 @@ class Epub
       end 
   end
   
-  def to_table
+  def truncate(s,l)
+    s[0,l] + (if s.size() > l then "..." else "" end)
+  end
+  
+  # to_table, with a specified max column length
+  def to_table(col = 55)
     data = []
     instance_variables.each do |iv|
-      if [:@opf, :@description, :@rights].include? iv then next end
       res = instance_variable_get iv
       unless res.to_s.empty?
-        data << [iv, res.to_s.gsub(/\n/,'')]
+        data << [iv, truncate(res.to_s.gsub(/\n/,''), col)]
       end
     end
     "#{(Terminal::Table.new rows: data)}"
