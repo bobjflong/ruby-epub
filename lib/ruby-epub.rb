@@ -1,5 +1,6 @@
 require 'zip/zip'
 require 'nokogiri'
+require 'terminal-table'
 
 class Epub
 
@@ -23,6 +24,18 @@ class Epub
       end
       rescue
       end 
+  end
+  
+  def to_table
+    data = []
+    instance_variables.each do |iv|
+      if [:@opf, :@description, :@rights].include? iv then next end
+      res = instance_variable_get iv
+      unless res.to_s.empty?
+        data << [iv, res.to_s.gsub(/\n/,'')]
+      end
+    end
+    "#{(Terminal::Table.new rows: data)}"
   end
 
    def get_opf(zipfile)
